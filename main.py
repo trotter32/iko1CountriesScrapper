@@ -1,14 +1,23 @@
 import lxml.html
+import pyperclip
 
 dataToWrite = ""
-listOfUrls = ["http://www.kyokushinkaikan.org/en/branch/asia.html",
-              "http://www.kyokushinkaikan.org/en/branch/southpacific.html",
-              "http://www.kyokushinkaikan.org/en/branch/russia.html",
-              "http://www.kyokushinkaikan.org/en/branch/middleeast.html",
-              "http://www.kyokushinkaikan.org/en/branch/europe.html",
-              "http://www.kyokushinkaikan.org/en/branch/africa.html",
-              "http://www.kyokushinkaikan.org/en/branch/northamerica.html",
-              "http://www.kyokushinkaikan.org/en/branch/southamerica.html"]
+listOfUrls = list()
+
+listOfKeys = ["A", "S", "R", "M", "E", "F", "N", "U"]
+countriesDict = {listOfKeys[0]: "asia", listOfKeys[1]: "southpacific", listOfKeys[2]: "russia",
+                 listOfKeys[3]: "middleeast", listOfKeys[4]: "europe", listOfKeys[5]: "africa",
+                 listOfKeys[6]: "northamerica", listOfKeys[7]: "southamerica"}
+inputStr = input("Unesite sifru koja predstavlja spisak regija iz kojih zelite mejlove Branch Chief-ova\n" +
+                 "mejlovi ce biti eksportovani u 'emails.txt' fajl i kopirani na clipboard \n\n" +
+                 "~~~~~ konstrukcija sifre: jedno slovo- jedna regija, bez razmaka, velicina slova nije bitna," +
+                 " otkucate zeljenu sifru i lupite enter ~~~~~ \n\n" +
+                 "~~~ A - Azija, S - Juzni Pacifik, R - Rusija, M - Bliski Istok, E - Evropa, F - Afrika, " +
+                 "N - Severna Amerika, U - Juzna Amerika ~~~ \n")
+
+for key in list(inputStr):
+    if key.upper() in listOfKeys:
+        listOfUrls.append("http://www.kyokushinkaikan.org/en/branch/" + countriesDict[key.upper()] + ".html")
 
 
 for url in listOfUrls:
@@ -30,3 +39,4 @@ for url in listOfUrls:
 
 f = open("emails.txt", "w")
 f.write(dataToWrite)
+pyperclip.copy(dataToWrite)
